@@ -1,0 +1,5 @@
+# MarketBundle/Resources/services.yml
+services:
+    fos.user_provider:
+        class:    MarketBundle\Security\Core\User\FOSUBUserProvider
+        arguments: ['@fos_user.user_manager', {facebook: facebook_id}]
