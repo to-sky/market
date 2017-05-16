@@ -13,7 +13,7 @@ class FOSUBUserProvider extends BaseFOSUBProvider
      * {@inheritDoc}
      */
     public function connect(UserInterface $user, UserResponseInterface $response)
-    {
+    {        
         $property = $this->getProperty($response);
         $facebook_id = $response->getUsername();
 
