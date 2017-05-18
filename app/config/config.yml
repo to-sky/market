@@ -39,6 +39,8 @@ framework:
 twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
+    form_themes:
+        - 'VichUploaderBundle:Form:fields.html.twig'
 
 # Doctrine Configuration
 doctrine:
@@ -109,3 +111,15 @@ ewz_recaptcha:
     private_key: "%google_secret%"
     ajax:         false
     enabled:      true
+
+# VichUploaderBundle
+vich_uploader:
+    db_driver: orm
+    mappings:
+        product_image:
+            uri_prefix:         /images/products
+            upload_destination: '%kernel.root_dir%/../web/images/products'
+
+            inject_on_load:     false
+            delete_on_update:   true
+            delete_on_remove:   true

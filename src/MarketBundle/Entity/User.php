@@ -18,15 +18,49 @@ class User extends BaseUser
      */
     protected $id;
 
-    /** @ORM\Column(name="facebook_id", type="string", length=255, nullable=true) */
+    /** 
+     * @ORM\Column(name="facebook_id", type="string", length=255, nullable=true)
+     */
     protected $facebook_id;
 
-    /** @ORM\Column(name="facebook_access_token", type="string", length=255, nullable=true) */
+    /**
+     * @ORM\Column(name="facebook_access_token", type="string", length=255, nullable=true)
+     */
     protected $facebook_access_token;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Product", mappedBy="fos_user")
+     */
+    private $product;
 
     public function __construct()
     {
         parent::__construct();
+    }
+
+
+    /**
+     * Gets the value of id.
+     *
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Sets the value of id.
+     *
+     * @param mixed $id the id
+     *
+     * @return self
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     /**
@@ -73,6 +107,30 @@ class User extends BaseUser
     public function setFacebookAccessToken($facebook_access_token)
     {
         $this->facebook_access_token = $facebook_access_token;
+
+        return $this;
+    }
+
+    /**
+     * Gets the value of product.
+     *
+     * @return mixed
+     */
+    public function getProduct()
+    {
+        return $this->product;
+    }
+
+    /**
+     * Sets the value of product.
+     *
+     * @param mixed $product the product
+     *
+     * @return self
+     */
+    public function setProduct($product)
+    {
+        $this->product = $product;
 
         return $this;
     }
