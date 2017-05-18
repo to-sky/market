@@ -5,9 +5,14 @@
         <title>{% block title %}Market{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+        <link rel="stylesheet" href="{{ asset('assets/css/vendors.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/app.min.css') }}">
     </head>
     <body>
         {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+        {% block javascripts %}
+            <script src="{{ asset('assets/js/vendors.min.js') }}"></script>
+            <script src="{{ asset('assets/js/app.min.js') }}"></script>
+        {% endblock %}
     </body>
 </html>
