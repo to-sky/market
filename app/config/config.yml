@@ -121,7 +121,7 @@ ewz_recaptcha:
     public_key:  "%google_public%"
     private_key: "%google_secret%"
     ajax:         false
-    enabled:      false
+    enabled:      TRUE
 
 # VichUploaderBundle
 vich_uploader:
