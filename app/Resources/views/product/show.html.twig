@@ -1,51 +1,55 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Product</h1>
+<h1 class="page-header">{{ product.title }}</h1>
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Title</th>
-                <td>{{ product.title }}</td>
-            </tr>
-            <tr>
-                <th>Body</th>
-                <td>{{ product.body }}</td>
-            </tr>
-            <tr>
-                <th>Thumbnail</th>
-                <td><img src="{{ vich_uploader_asset(product, 'imageFile') }}" alt="{{ product.title }}" /></td>
-            </tr>
-            <tr>
-                <th>Price</th>
-                <td>{{ product.price }}</td>
-            </tr>
-            <tr>
-                <th>Published</th>
-                <td>{% if product.publishedAt %}{{ product.publishedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-            </tr>
+<div class="row">
+    <div class="col-sm-3">
+        <img src="{{ product.imageName ? vich_uploader_asset(product, 'imageFile') : '/images/app/no-image.jpg'}}" alt="{{ product.title }}" class="img-responsive img-thumbnail" />
 
+        <h5 class="alert bg-primary text-center"><strong>Price: </strong>{{ product.price }} &euro;</h5>
+
+        <ul class="list-group">
+            <li class="list-group-item"><strong>Published: </strong>{{ product.publishedAt|date('Y-m-d H:i:s') }}</li>
             {% if product.updatedAt %}
-                <tr>
-                    <th>Updated</th>
-                    <td>{% if product.updatedAt %}{{ product.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-                </tr>
+            <li class="list-group-item"><strong>Updated: </strong>{{ product.updatedAt|date('Y-m-d H:i:s') }}</li>
             {% endif %}
-        </tbody>
-    </table>
+        </ul>
+    </div>
 
-    <ul>
-        <li>
-            <a href="{{ path('product_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('product_edit', { 'id': product.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+    <div class="col-sm-9">
+        <p>{{ product.body }}</p>
+        <hr>
+        <div class="btn-group pull-right">
+            <a href="{{ path('product_edit', { 'id': product.id }) }}" class="btn btn-primary">Edit</a>
+            <a href="{{ path('product_index') }}" class="btn btn-default">Back to the list</a>
+            <button type="button" class="btn btn-danger pull-right" data-toggle="modal" data-target="#deletePdoduct">
+                Delete
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="deletePdoduct" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title"><i class="fa fa-trash-o text-danger"></i> Delete this product</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure to delete <strong class="text-info">{{ product.title }}</strong>?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <div class="col-sm-2 pull-right">
+                        {{ form_start(delete_form) }}
+                            <input type="submit" value="Delete" class="btn btn-danger">
+                        {{ form_end(delete_form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

@@ -22,7 +22,7 @@ var path = {
         }
     },
     src: {
-        css: assets + 'sass/**/*.sass',
+        css: assets + 'scss/**/*.scss',
         js: assets + 'js/*.js',
         img: assets + 'img/**/*.*',
         fonts: assets + 'fonts/**/*.*'

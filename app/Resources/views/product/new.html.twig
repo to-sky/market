@@ -1,17 +1,17 @@
 {% extends 'base.html.twig' %}
 {% form_theme form 'VichUploaderBundle:Form:fields.html.twig' %}
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
 
 {% block body %}
-    <h1>Product creation</h1>
+    <h1 class="page-header">New product</h1>
 
     {{ form_start(form) }}
         {{ form_widget(form) }}
-        <input type="submit" value="Create" />
-    {{ form_end(form) }}
 
-    <ul>
-        <li>
-            <a href="{{ path('product_index') }}">Back to the list</a>
-        </li>
-    </ul>
+    <div class="button-group">
+        <input type="submit" value="Create" class="btn btn-success" />
+        <a href="{{ path('product_index') }}" class="btn btn-link">Back to the list</a>
+    </div>
+
+    {{ form_end(form) }}
 {% endblock %}

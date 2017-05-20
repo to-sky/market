@@ -37,7 +37,7 @@ class Product
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=255, unique=true)
+     * @ORM\Column(name="title", type="string", length=255)
      */
     private $title;
 
@@ -80,7 +80,7 @@ class Product
     /**
      * @var \DateTime
      *
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable=true)
      */
     private $updatedAt;
 
