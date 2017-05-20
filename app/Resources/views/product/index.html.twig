@@ -1,63 +1,71 @@
-{% extends 'layouts/index.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block body %}
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            
-            <h1 class="page-header">Products</h1>
+<h1 class="page-header">Products</h1>
 
-            <div class="form-group">
-                <a href="{{ path('product_new') }}" class="btn btn-success"><span class="glyphicon glyphicon-send"></span> Create a new product</a>
-            </div>
-            
-            {% if products %}
-            <table class="table table-condensed table-responsive table-bordered">
-                <thead>
-                    <tr class="active">
-                        <th>Title</th>
-                        <th>Body</th>
-                        <th>Thumbnail</th>
-                        <th>Price</th>
-                        {% if is_granted('ROLE_ADMIN') %}
-                            <th>Author</th>
-                        {% endif %}
-                        <th>Published</th>
-                        <th>Updated</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {% for product in products %}
-                    <tr>
-                        <td>{{ product.title }}</td>
-                        <td>{{ product.body|slice(0, 255) }}</td>
-                        <td>
-                            <img src="{{ vich_uploader_asset(product, 'imageFile') }}" alt="{{ product.title }}" class="img-rounded img-thumbnail" width="150" /></td>
-                        <td>{{ product.price }}</td>
-
-                        {% if is_granted('ROLE_ADMIN') %}
-                            <td>{{ product.userid.username }} ({{ product.userid.email }})</td>
-                        {% endif %}
-                        
-                        <td width="100">{% if product.publishedAt %}{{ product.publishedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-                        <td width="100">{% if product.updatedAt %}{{ product.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-                        <td width="200">
-                            <div class="btn-group btn-group-justified" role="group">
-                                <div class="btn-group" role="group">
-                                    <a href="{{ path('product_show', { 'id': product.id }) }}" class="btn btn-default"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Show</a>
-                                </div>
-                                <div class="btn-group" role="group">
-                                    <a href="{{ path('product_edit', { 'id': product.id }) }}" class="btn btn-primary"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit</a>
-                                </div>  
-                            </div>
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-            {% endif %}
+<div class="row form-group">
+    <div class="col-sm-8">
+        <a href="{{ path('product_new') }}" class="btn btn-success"><span class="glyphicon glyphicon-send"></span> Create a new product</a>
+    </div>
+    <div class="col-sm-4">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Product...">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button">Search</button>
+            </span>
         </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+
+        {% if products %}
+        <table class="table table-condensed table-responsive table-bordered">
+            <thead>
+                <tr class="active">
+                    <th>Title</th>
+                    <th>Body</th>
+                    <th>Thumbnail</th>
+                    <th>Price</th>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <th>Author</th>
+                    {% endif %}
+                    <th>Published</th>
+                    <th>Updated</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for product in products %}
+                <tr>
+                    <td>{{ product.title }}</td>
+                    <td>{{ product.body|slice(0, 255) }}</td>
+                    <td>               
+                        <img src="{{ product.imageName ? vich_uploader_asset(product, 'imageFile') : '/images/app/no-image.jpg'}}" alt="{{ product.title }}" class="img-rounded img-responsive" width="150" /></td>
+                    <td>{{ product.price }}</td>
+
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <td>{{ product.userid.username }} ({{ product.userid.email }})</td>
+                    {% endif %}
+                    
+                    <td width="100">{% if product.publishedAt %}{{ product.publishedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                    <td width="100">{% if product.updatedAt %}{{ product.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                    <td width="200">
+                        <div class="btn-group btn-group-justified" role="group">
+                            <div class="btn-group" role="group">
+                                <a href="{{ path('product_show', { 'id': product.id }) }}" class="btn btn-default"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Show</a>
+                            </div>
+                            <div class="btn-group" role="group">
+                                <a href="{{ path('product_edit', { 'id': product.id }) }}" class="btn btn-primary"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit</a>
+                            </div>  
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
     </div>
 </div>
 {% endblock %}
