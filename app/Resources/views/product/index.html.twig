@@ -8,11 +8,17 @@
         <a href="{{ path('product_new') }}" class="btn btn-success"><span class="glyphicon glyphicon-send"></span> Create a new product</a>
     </div>
     <div class="col-sm-4">
-        <div class="input-group">
-            <input type="text" class="form-control" placeholder="Product...">
-            <span class="input-group-btn">
-                <button class="btn btn-default" type="button">Search</button>
-            </span>
+        <div id="custom-search-input">
+            <form action="{{ path('product_index') }}" method="GET">
+                <div class="input-group">
+                    <input type="text" name="search" class="form-control" placeholder="Search product...">
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-default">
+                            <i class="glyphicon glyphicon-search"></i>
+                        </button>
+                    </span>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -24,15 +30,15 @@
         <table class="table table-condensed table-responsive table-bordered">
             <thead>
                 <tr class="active">
-                    <th>Title</th>
-                    <th>Body</th>
-                    <th>Thumbnail</th>
-                    <th>Price</th>
+                    <th>{{ knp_pagination_sortable(products, 'Title', 'p.title') }}</th>
+                    <th>{{ knp_pagination_sortable(products, 'Body', 'p.body') }}</th>
+                    <th>{{ knp_pagination_sortable(products, 'Thumbnail', 'p.imageName') }}</th>
+                    <th>{{ knp_pagination_sortable(products, 'Price', 'p.price') }}</th>
                     {% if is_granted('ROLE_ADMIN') %}
-                        <th>Author</th>
+                        <th>{{ knp_pagination_sortable(products, 'Author', 'u.username') }}</th>
                     {% endif %}
-                    <th>Published</th>
-                    <th>Updated</th>
+                    <th>{{ knp_pagination_sortable(products, 'Published', 'p.publishedAt') }}</th>
+                    <th>{{ knp_pagination_sortable(products, 'Updated', 'p.updatedAt') }}</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -58,7 +64,7 @@
                             </div>
                             <div class="btn-group" role="group">
                                 <a href="{{ path('product_edit', { 'id': product.id }) }}" class="btn btn-primary"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit</a>
-                            </div>  
+                            </div> 
                         </div>
                     </td>
                 </tr>
@@ -66,6 +72,9 @@
             </tbody>
         </table>
         {% endif %}
+        <div class="navigation">
+            {{ knp_pagination_render(products) }}
+        </div>
     </div>
 </div>
 {% endblock %}

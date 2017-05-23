@@ -21,18 +21,37 @@ class ProductController extends Controller
      * @Route("/", name="product_index")
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+        $queryBuilder = $em->getRepository('MarketBundle:Product')->createQueryBuilder('p');
+
+        $queryBuilder
+            ->join('p.user_id', 'u');
 
         $user = $this->container->get('security.token_storage')->getToken()->getUser();
-        $user_id = $user->getId();
 
-        if ($user->hasRole('ROLE_ADMIN')) {
-            $products = $em->getRepository('MarketBundle:Product')->findAll();
-        } else {
-            $products = $em->getRepository('MarketBundle:Product')->findBy(['user_id' => $user_id]);
+        if (! $user->hasRole('ROLE_ADMIN')) {
+            $user_id = $user->getId();
+            $queryBuilder
+                ->where('u.id = :user_id')
+                ->setParameter('user_id', $user_id);
         }
+
+        if ($request->query->getAlnum('search')) {
+            $queryBuilder
+                ->andWhere('p.title LIKE :title')
+                ->setParameter('title', '%' . $request->query->getAlnum('search') . '%');
+        }
+
+        $query = $queryBuilder->getQuery();
+
+        $paginator = $this->get('knp_paginator');
+        $products = $paginator->paginate(
+            $query,
+            $request->query->get('page', 1),
+            10
+        );
 
         return $this->render('product/index.html.twig', array(
             'products' => $products,

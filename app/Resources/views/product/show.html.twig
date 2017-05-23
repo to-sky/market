@@ -18,7 +18,7 @@
     </div>
 
     <div class="col-sm-9">
-        <p>{{ product.body }}</p>
+        <p>{{ product.body|nl2br }}</p>
         <hr>
         <div class="btn-group pull-right">
             <a href="{{ path('product_edit', { 'id': product.id }) }}" class="btn btn-primary">Edit</a>
