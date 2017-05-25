@@ -30,12 +30,6 @@ class ProductType extends AbstractType
                     'download_link' => false
                 ))
                 ->add('price', MoneyType::class);
-                // ->add('publishedAt', DateTimeType::class, [
-                //     'placeholder' => array(
-                //         'year' => 'Year', 'month' => 'Month', 'day' => 'Day',
-                //         'hour' => 'Hour', 'minute' => 'Minute', 'second' => 'Second',
-                //     )
-                // ]);
     }
     
     /**

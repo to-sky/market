@@ -3,7 +3,18 @@ services:
         class:    MarketBundle\Security\Core\User\FOSUBUserProvider
         arguments: ['@fos_user.user_manager', {facebook: facebook_id}]
 
-    app.form.registration:
+    app.form_registration:
         class: MarketBundle\Form\RegistrationType
         tags:
             - { name: form.type, alias: app_user_registration }
+
+    app.form_profile:
+        class: MarketBundle\Form\ProfileType
+        tags:
+            - { name: form.type, alias: app_user_profile }
+
+    app.profile_edit_listener:
+        class: MarketBundle\EventListener\ProfileEditListener
+        arguments: ['@fos_user.mailer', '@fos_user.util.token_generator', '@router', '@session', '@security.token_storage']
+        tags:
+            - { name: kernel.event_subscriber }

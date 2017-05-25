@@ -22,17 +22,15 @@ class LoadUserData implements FixtureInterface, ContainerAwareInterface
 
     public function load(ObjectManager $manager)
     {
-
         $user = new User();
-        $user->setUsername('tester');
-        $user->setEmail('tester@mail.com');
-        $user->setSalt(md5(uniqid()));
+        $user->setUsername('admin');
+        $user->setEmail('admin@mail.com');
         $user->setEnabled(true);
-
-        // the 'security.password_encoder' service requires Symfony 2.6 or higher
+        $user->setSalt(md5(uniqid()));
         $encoder = $this->container->get('security.password_encoder');
         $password = $encoder->encodePassword($user, '123');
         $user->setPassword($password);
+        $user->setRoles(array('ROLE_ADMIN'));
 
         $manager->persist($user);
         $manager->flush();
