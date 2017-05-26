@@ -27,7 +27,8 @@ class ProductController extends Controller
         $queryBuilder = $em->getRepository('MarketBundle:Product')->createQueryBuilder('p');
 
         $queryBuilder
-            ->join('p.user_id', 'u');
+            ->join('p.user_id', 'u')
+            ->orderBy('p.publishedAt', 'DESC');
 
         $user = $this->container->get('security.token_storage')->getToken()->getUser();
 

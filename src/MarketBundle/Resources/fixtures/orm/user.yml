@@ -1,0 +1,33 @@
+MarketBundle\Entity\User:
+  user_admin:
+    username: admin
+    email: admin@mail.com
+    enabled: true
+    plainpassword: 123
+    roles: [ROLE_ADMIN]
+
+  user_{0..5}:
+    username: <firstName()>
+    email: <email()>
+    enabled: true
+    plainpassword: 123
+    roles: [ROLE_USER]
+
+MarketBundle\Entity\Product:
+  product_admin{0..15}:
+    user_id: '@user_admin'
+    title: <sentence()>
+    body: <text(1000)>
+    imageName: <image(web/images/products/, 800, 600, 'food', 0)>
+    price: <numberBetween(10, 500)>
+    publishedAt: <dateTimeBetween("-2 years", "now")>
+    updatedAt: '<dateTimeBetween($publishedAt, "now")>'
+
+  product{0..55}:
+    user_id: '@user*'
+    title: <sentence()>
+    body: <text(1000)>
+    imageName: <image(web/images/products/, 800, 600, 'food', 0)>
+    price: <numberBetween(10,500)>
+    publishedAt: <dateTimeBetween("-2 years", "now")>
+    updatedAt: '<dateTimeBetween($publishedAt, "now")>'

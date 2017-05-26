@@ -27,18 +27,17 @@
     <div class="col-sm-12">
 
         {% if products.items %}
-        <table class="table table-condensed table-responsive table-bordered">
+        <table class="table table-responsive table-bordered">
             <thead>
                 <tr class="active">
                     <th>{{ knp_pagination_sortable(products, 'Title', 'p.title') }}</th>
                     <th>{{ knp_pagination_sortable(products, 'Body', 'p.body') }}</th>
-                    <th>{{ knp_pagination_sortable(products, 'Thumbnail', 'p.imageName') }}</th>
+                    <th width="150">{{ knp_pagination_sortable(products, 'Thumbnail', 'p.imageName') }}</th>
                     <th>{{ knp_pagination_sortable(products, 'Price', 'p.price') }}</th>
                     {% if is_granted('ROLE_ADMIN') %}
                         <th>{{ knp_pagination_sortable(products, 'Author', 'u.username') }}</th>
                     {% endif %}
-                    <th>{{ knp_pagination_sortable(products, 'Published', 'p.publishedAt') }}</th>
-                    <th>{{ knp_pagination_sortable(products, 'Updated', 'p.updatedAt') }}</th>
+                    <th width="100">{{ knp_pagination_sortable(products, 'Published', 'p.publishedAt') }}</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -52,27 +51,26 @@
                     <td>{{ product.price }}</td>
 
                     {% if is_granted('ROLE_ADMIN') %}
-                        <td>{{ product.userid.username }} ({{ product.userid.email }})</td>
+                        <td>
+                            <p>{{ product.userid.username }} <br> {{ product.userid.email }}</p>
+                        </td>
                     {% endif %}
                     
-                    <td width="100">{% if product.publishedAt %}{{ product.publishedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-                    <td width="100">{% if product.updatedAt %}{{ product.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-                    <td width="200">
-                        <div class="btn-group btn-group-justified" role="group">
-                            <div class="btn-group" role="group">
-                                <a href="{{ path('product_show', { 'id': product.id }) }}" class="btn btn-default"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Show</a>
-                            </div>
-                            <div class="btn-group" role="group">
-                                <a href="{{ path('product_edit', { 'id': product.id }) }}" class="btn btn-primary"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit</a>
-                            </div> 
-                        </div>
+                    <td class="text-center">{% if product.publishedAt %}{{ product.publishedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                    <td>
+                        <a href="{{ path('product_show', { 'id': product.id }) }}" class="btn btn-block btn-default">
+                            <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Show
+                        </a>
+                        <a href="{{ path('product_edit', { 'id': product.id }) }}" class="btn btn-block btn-primary">
+                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> Edit
+                        </a>
                     </td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
         {% endif %}
-        <div class="navigation">
+        <div class="navigation pull-right">
             {{ knp_pagination_render(products) }}
         </div>
     </div>

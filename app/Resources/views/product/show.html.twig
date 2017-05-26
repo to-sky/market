@@ -7,7 +7,7 @@
     <div class="col-sm-3">
         <img src="{{ product.imageName ? vich_uploader_asset(product, 'imageFile') : '/images/app/no-image.jpg'}}" alt="{{ product.title }}" class="img-responsive img-thumbnail" />
 
-        <h5 class="alert bg-primary text-center"><strong>Price: </strong>{{ product.price }} &euro;</h5>
+        <h5 class="alert bg-primary text-center"><strong>Price: </strong>{{ product.price }}</h5>
 
         <ul class="list-group">
             <li class="list-group-item"><strong>Published: </strong>{{ product.publishedAt|date('Y-m-d H:i:s') }}</li>
